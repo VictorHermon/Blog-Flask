@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h2>Comunidade Impressionadora - Hashtag Treinamentos</h2>
+        <h4>Alunos, experts e toda a galera em um só lugar!!!</h4>
+        <hr>
+        {% for post in posts %}
+            <div class="row border mt-3 p-3 meupost">
+                <div class="col-3">
+                    <div class="image pe-2">
+                        <img src="{{ url_for('static', filename='fotos_perfil/'+post.autor.foto_perfil) }}" class="rounded" width="200">
+                    </div>
+                    <div class="mt-2">
+                        <strong>{{ post.autor.username }}</strong>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            {% if current_user.cursos %}
+                                {% for curso in post.autor.cursos.split(';') %}
+                                    <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <a href="{{ url_for('exibir_post', post_id=post.id) }}"><h4>{{ post.titulo }}</h4></a>
+                    <p>{{ post.corpo }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
